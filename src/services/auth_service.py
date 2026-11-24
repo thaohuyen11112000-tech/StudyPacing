@@ -79,3 +79,14 @@ class AuthService:
                 "full_name": nguoi_dung["full_name"],
             },
         }
+
+    def verify_session(self, token: str) -> dict | None:
+        if not token:
+            return None
+        return self._sessions.get(token)
+
+    def logout(self, token: str) -> bool:
+        if token in self._sessions:
+            del self._sessions[token]
+            return True
+        return False
