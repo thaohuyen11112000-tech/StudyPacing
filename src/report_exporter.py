@@ -73,3 +73,4 @@ if __name__ == "__main__":
     # Thay đổi font_path sang file .ttf tiếng Việt có trên máy bạn (ví dụ C:/Windows/Fonts/arial.ttf)
     # pdf_file = export_to_pdf(sample_tasks, sample_hours, font_path="DejaVuSans.ttf")
     # print("Đã tạo PDF:", pdf_file)
+    
