@@ -47,3 +47,35 @@ class AuthService:
                 "full_name": full_name.strip(),
             },
         }
+
+    def login(self, email: str, password: str) -> dict:
+        if not email or not password:
+            return {"success": False, "error": "Vui lòng nhập đầy đủ email và mật khẩu."}
+
+        email_chuan = email.strip().lower()
+        nguoi_dung = self._users_by_email.get(email_chuan)
+
+        if not nguoi_dung or not check_password_hash(nguoi_dung["password_hash"], password):
+            return {"success": False, "error": "Email hoặc mật khẩu không chính xác."}
+
+        token = secrets.token_urlsafe(32)
+        self._sessions[token] = {
+            "user_id": nguoi_dung["id"],
+            "email": nguoi_dung["email"],
+        }
+
+        return {
+            "success": True,
+            "message": "Đăng nhập thành công.",
+            "token": token,
+            "session": {
+                "token": token,
+                "user_id": nguoi_dung["id"],
+                "email": nguoi_dung["email"],
+            },
+            "user": {
+                "id": nguoi_dung["id"],
+                "email": nguoi_dung["email"],
+                "full_name": nguoi_dung["full_name"],
+            },
+        }
