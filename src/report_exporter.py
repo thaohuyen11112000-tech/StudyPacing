@@ -127,3 +127,26 @@ def calculate_total_hours(records: List[Dict[str, Any]]) -> float:
 
     pdf.output(output_path)
     return output_path
+    def report_exporter(
+    records: List[Dict[str, Any]],
+    export_format: str = "csv",
+    output_path: Optional[str] = None,
+    learner_name: Optional[str] = None,
+    font_path: Optional[str] = None,
+) -> str:
+    """Hàm điều phối chính của US05: xuất lịch sử học ra file 'csv' hoặc 'pdf'."""
+    fmt = export_format.strip().lower()
+    if fmt == "csv":
+        return export_to_csv(
+            records=records,
+            output_path=output_path or "bao_cao_lich_su_hoc.csv",
+            learner_name=learner_name,
+        )
+    if fmt == "pdf":
+        return export_to_pdf(
+            records=records,
+            output_path=output_path or "bao_cao_lich_su_hoc.pdf",
+            learner_name=learner_name,
+            font_path=font_path,
+        )
+    raise ValueError("Định dạng không hỗ trợ. Chỉ chấp nhận 'csv' hoặc 'pdf'.")
