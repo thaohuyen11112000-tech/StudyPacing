@@ -48,3 +48,20 @@ def calculate_total_hours(records: List[Dict[str, Any]]) -> float:
         writer.writerow(["", "", "Tổng số giờ đã học", total_hours])
 
     return output_path
+    def _find_vietnamese_font(custom_font_path: Optional[str] = None) -> str:
+    """Tìm file font .ttf hỗ trợ tiếng Việt trên máy."""
+    candidates: List[Optional[str]] = [
+        custom_font_path,
+        "DejaVuSans.ttf",
+        "C:\\Windows\\Fonts\\arial.ttf",
+        "C:\\Windows\\Fonts\\tahoma.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
+    ]
+    for path in candidates:
+        if path and os.path.isfile(path) and path.lower().endswith(".ttf"):
+            return path
+
+    raise FileNotFoundError(
+        "Không tìm thấy font .ttf hỗ trợ tiếng Việt. Vui lòng truyền font_path hợp lệ."
+    )
