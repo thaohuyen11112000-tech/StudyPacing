@@ -56,37 +56,3 @@ def build_daily_summary(goal_minutes, sessions: list[dict]) -> dict:
         "daily_goal_minutes": get_validated_daily_goal(goal_minutes),
         "golden_hour": find_golden_hour(sessions),
     }
-def find_golden_hour(sessions: list[dict]) -> dict | None:
-    """Tìm khung giờ có tỷ lệ hoàn thành phiên học cao nhất."""
-    hourly_stats = analyze_hourly_completion(sessions)
-    if not hourly_stats:
-        return None
-
-    best_hour = None
-    best_rate = -1.0
-    best_completed = -1
-
-    for hour in sorted(hourly_stats.keys()):
-        completed = hourly_stats[hour]["completed"]
-        rate = hourly_stats[hour]["rate"]
-
-        if (rate > best_rate) or (rate == best_rate and completed > best_completed):
-            best_rate = rate
-            best_completed = completed
-            best_hour = hour
-
-    return {
-        "hour": best_hour,
-        "time_range": f"{best_hour:02d}:00 - {best_hour + 1:02d}:00",
-        "completion_rate": round(best_rate, 4),
-        "completed": best_completed,
-        "total": hourly_stats[best_hour]["total"],
-    }
-
-
-def build_daily_summary(goal_minutes, sessions: list[dict]) -> dict:
-    """Tổng hợp mục tiêu ngày hợp lệ (AC1) và khung giờ vàng (AC2)."""
-    return {
-        "daily_goal_minutes": get_validated_daily_goal(goal_minutes),
-        "golden_hour": find_golden_hour(sessions),
-    }
