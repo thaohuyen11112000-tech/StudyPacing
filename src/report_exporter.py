@@ -16,7 +16,7 @@ def calculate_total_hours(records: List[Dict[str, Any]]) -> float:
         except (ValueError, TypeError):
             continue
     return round(total, 2)
-    def export_to_csv(
+def export_to_csv(
     records: List[Dict[str, Any]],
     output_path: str = "lich_su_hoc.csv",
     learner_name: Optional[str] = None,
@@ -48,7 +48,7 @@ def calculate_total_hours(records: List[Dict[str, Any]]) -> float:
         writer.writerow(["", "", "Tổng số giờ đã học", total_hours])
 
     return output_path
-    def _find_vietnamese_font(custom_font_path: Optional[str] = None) -> str:
+def _find_vietnamese_font(custom_font_path: Optional[str] = None) -> str:
     """Tìm file font .ttf hỗ trợ tiếng Việt trên máy."""
     candidates: List[Optional[str]] = [
         custom_font_path,
@@ -65,7 +65,7 @@ def calculate_total_hours(records: List[Dict[str, Any]]) -> float:
     raise FileNotFoundError(
         "Không tìm thấy font .ttf hỗ trợ tiếng Việt. Vui lòng truyền font_path hợp lệ."
     )
-    def export_to_pdf(
+def export_to_pdf(
     records: List[Dict[str, Any]],
     output_path: str = "lich_su_hoc.pdf",
     learner_name: Optional[str] = None,
@@ -127,7 +127,7 @@ def calculate_total_hours(records: List[Dict[str, Any]]) -> float:
 
     pdf.output(output_path)
     return output_path
-    def report_exporter(
+def report_exporter(
     records: List[Dict[str, Any]],
     export_format: str = "csv",
     output_path: Optional[str] = None,
